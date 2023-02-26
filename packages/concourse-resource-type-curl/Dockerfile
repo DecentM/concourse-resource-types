@@ -4,5 +4,3 @@ WORKDIR /opt/resource
 RUN apk add --no-cache curl jq bash
 
 COPY src/ ./
-
-ENV DEBUG true

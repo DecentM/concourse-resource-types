@@ -4,7 +4,7 @@ resource_types:
     check_every: 1h
     source:
       repository: decentm/concourse-curl-resource
-      tag: v0.0.20
+      tag: v1.0.0
 
 resources:
   - name: example-com
@@ -12,8 +12,6 @@ resources:
     check_every: 1h
     source:
       url: http://example.com
-      check_arguments:
-        - "-I"
       arguments:
         - "-A"
         - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
@@ -68,3 +66,6 @@ jobs:
             - "POST"
             - "--json"
             - content: Website changed!
+        get_params:
+          arguments:
+            - "-I"
