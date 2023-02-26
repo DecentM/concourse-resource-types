@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -15,14 +15,8 @@ fi
 mkdir -p .curl
 
 url=$1
-arguments=$2
+readarray -t arguments < <(printf '%s\n' "$2" | jq -rc '.[]')
 
 trap "times > .curl/times" EXIT
 
-printf '%s\n' "$arguments" | xargs curl "$url" \
-  --cookie-jar .curl/cookie-jar \
-  --etag-save .curl/etag-save \
-  --dump-header .curl/dump-header \
-  --output .curl/output \
-  --fail-with-body \
-  --location
+curl "$url" --cookie-jar .curl/cookie-jar --etag-save .curl/etag-save --dump-header .curl/dump-header --output .curl/output --fail-with-body --location "${arguments[@]}"

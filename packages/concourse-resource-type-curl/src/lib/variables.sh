@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -12,11 +12,13 @@ payload=$(cat)
 
 get_payload() {
   if [ $# -eq 1 ]; then
-    printf '%s\n' "$payload" | jq -r ".$1"
+    jq -r ".$1" <<<"$payload" | sed 's/\\n//g'
   else
-    printf '%s\n' "$payload" | jq -r ".$1 // \"$2\""
+    jq -r ".$1 // \"$2\"" <<<"$payload" | sed 's/\\n//g'
   fi
 }
+
+set +u
 
 variable=$1
 
@@ -24,14 +26,14 @@ case $variable in
 "url")
   get_payload "source.url"
   ;;
-"source.arguments")
-  get_payload "source.arguments" "[]" | jq -r 'map("\"" + . + "\"") | join(" ")'
-  ;;
-"params.arguments")
-  get_payload "params.arguments" "[]" | jq -r 'map("\"" + . + "\"") | join(" ")'
+"arguments")
+  source_arguments=$(get_payload "source.arguments" "[]")
+  params_arguments=$(get_payload "params.arguments" "[]")
+
+  printf '%s\n' "[$source_arguments, $params_arguments]" | jq -r "flatten(1)"
   ;;
 *)
-  printf 'Supported variables: "url", "arguments".\n\nUsage: ./variables.sh <variable>\n'
+  printf 'Supported variables: "url", "arguments".\n\nUsage: variables.sh <variable>\n'
   exit 1
   ;;
 esac

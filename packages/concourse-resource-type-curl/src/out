@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -10,11 +10,10 @@ set -u
 
 payload=$(cat)
 
-url=$(printf '%s\n' "$payload" | "$(dirname "$0")"/lib/variables.sh url)
-source_arguments=$(printf '%s\n' "$payload" | "$(dirname "$0")"/lib/variables.sh source.arguments)
-params_arguments=$(printf '%s\n' "$payload" | "$(dirname "$0")"/lib/variables.sh params.arguments)
+url=$("$(dirname "$0")"/lib/variables.sh url <<<"$payload")
+arguments=$("$(dirname "$0")"/lib/variables.sh arguments <<<"$payload")
 
-"$(dirname "$0")"/lib/curl.sh "$url" "$source_arguments $params_arguments"
+"$(dirname "$0")"/lib/curl.sh "$url" "$arguments"
 "$(dirname "$0")"/lib/parse-times.sh
 
 "$(dirname "$0")"/lib/print-metadata.sh

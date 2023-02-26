@@ -4,7 +4,7 @@ resource_types:
     check_every: 1h
     source:
       repository: decentm/concourse-curl-resource
-      tag: v0.0.9
+      tag: v0.0.13
 
 resources:
   - name: example-com
@@ -13,8 +13,8 @@ resources:
     source:
       url: http://example.com
       arguments:
-        - -A
-        - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36
+        - "-A"
+        - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
 
   - name: webhook
     type: curl
@@ -56,12 +56,10 @@ jobs:
         trigger: true
 
       - put: webhook
-        inputs:
-          - data
         params:
           arguments:
-            - -X
-            - POST
-            - --json
+            - "-X"
+            - "POST"
+            - "--json"
             - |
-              '{"content": "Website changed!"}'
+              {"asd": 1, "from_ci": true}
