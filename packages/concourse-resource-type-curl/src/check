@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+
+if [ -n "${DEBUG}" ]; then
+  set -x
+fi
+
+set -u
+
+payload=$(cat)
+
+url=$(printf '%s\n' "$payload" | "$(dirname "$0")"/lib/variables.sh url)
+arguments=$(printf '%s\n' "$payload" | "$(dirname "$0")"/lib/variables.sh source.arguments)
+
+"$(dirname "$0")"/lib/curl.sh "$url" "$arguments"
+
+hash=$(sha256sum .curl/output | cut -d ' ' -f1)
+
+jq -n "[{hash: \"$hash\"}]"

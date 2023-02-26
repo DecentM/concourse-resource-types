@@ -1,0 +1,39 @@
+#!/bin/sh
+
+set -e
+
+if [ -n "${DEBUG}" ]; then
+  set -x
+fi
+
+set -u
+
+payload=$(cat)
+
+url=$(printf '%s\n' "$payload" | "$(dirname "$0")"/lib/variables.sh url)
+source_arguments=$(printf '%s\n' "$payload" | "$(dirname "$0")"/lib/variables.sh source.arguments)
+params_arguments=$(printf '%s\n' "$payload" | "$(dirname "$0")"/lib/variables.sh params.arguments)
+
+"$(dirname "$0")"/lib/curl.sh "$url" "$source_arguments $params_arguments"
+"$(dirname "$0")"/lib/parse-times.sh
+
+set +u
+
+# The output directory is passed as the first argument
+if [ -n "$1" ]; then
+  mkdir -p "$1"
+  cp -a .curl/* "$1/"
+fi
+
+hash=$(sha256sum .curl/output | cut -d ' ' -f1)
+
+jq -n "{
+  version: { hash: \"$hash\" },
+  metadata: [
+    { name: \"hash\", value: \"$hash\" },
+    { name: \"user_shell\", value: \"$(cat .curl/times/user_shell)\" },
+    { name: \"system_shell\", value: \"$(cat .curl/times/system_shell)\" },
+    { name: \"user_child\", value: \"$(cat .curl/times/user_child)\" },
+    { name: \"system_child\", value: \"$(cat .curl/times/system_child)\" }
+  ]
+}"
