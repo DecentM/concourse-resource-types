@@ -1,0 +1,67 @@
+resource_types:
+  - name: curl
+    type: registry-image
+    check_every: 1h
+    source:
+      repository: decentm/concourse-curl-resource
+      tag: v0.0.9
+
+resources:
+  - name: example-com
+    type: curl
+    check_every: 1h
+    source:
+      url: http://example.com
+      arguments:
+        - -A
+        - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36
+
+  - name: webhook
+    type: curl
+    check_every: 1h
+    source:
+      url: ((webhook))
+
+jobs:
+  - name: get-website
+    plan:
+      - get: example-com
+        trigger: true
+
+        on_success:
+          do:
+            - load_var: site-html
+              file: example-com/output
+            - load_var: site-cookie-jar
+              file: example-com/cookie-jar
+            - load_var: site-dump-header
+              file: example-com/dump-header
+            - load_var: site-etag-save
+              file: example-com/etag-save
+
+            - load_var: site-times-system_child
+              file: example-com/times/system_child
+            - load_var: site-times-system_shell
+              file: example-com/times/system_shell
+            - load_var: site-times-user_child
+              file: example-com/times/user_child
+            - load_var: site-times-user_shell
+              file: example-com/times/user_shell
+
+  - name: notify
+    plan:
+      - get: example-com
+        passed:
+          - get-website
+        trigger: true
+
+      - put: webhook
+        inputs:
+          - data
+        params:
+          arguments:
+            - -X
+            - POST
+            - --json
+            - |
+              '{"content": "Website changed!"}'
