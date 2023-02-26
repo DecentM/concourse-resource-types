@@ -32,6 +32,12 @@ case $variable in
 
   printf '%s\n' "[$source_arguments, $params_arguments]" | jq -r "flatten(1)"
   ;;
+"response_code_max")
+  get_payload "source.response_code.max" "299"
+  ;;
+"response_code_min")
+  get_payload "source.response_code.min" "200"
+  ;;
 *)
   printf 'Supported variables: "url", "arguments".\n\nUsage: variables.sh <variable>\n'
   exit 1

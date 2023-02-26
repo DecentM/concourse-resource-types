@@ -12,9 +12,10 @@ payload=$(cat)
 
 url=$("$(dirname "$0")"/lib/variables.sh url <<<"$payload")
 arguments=$("$(dirname "$0")"/lib/variables.sh arguments <<<"$payload")
+response_code_min=$("$(dirname "$0")"/lib/variables.sh response_code_min <<<"$payload")
+response_code_max=$("$(dirname "$0")"/lib/variables.sh response_code_max <<<"$payload")
 
 "$(dirname "$0")"/lib/curl.sh "$url" "$arguments"
-"$(dirname "$0")"/lib/parse-times.sh
 
 set +u
 
@@ -25,3 +26,5 @@ if [ -n "$1" ]; then
 fi
 
 "$(dirname "$0")"/lib/print-metadata.sh
+
+"$(dirname "$0")"/lib/assert-response-code.sh "$(cat .curl/response-code)" "$response_code_min" "$response_code_max"

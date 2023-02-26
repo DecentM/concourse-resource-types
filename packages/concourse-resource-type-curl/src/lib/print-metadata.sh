@@ -10,12 +10,14 @@ set -u
 
 hash=$(sha256sum .curl/output | cut -d ' ' -f1)
 etag_save=$(tr -d '"' <.curl/etag-save)
+response_code=$(head -n1 <.curl/response-code)
 
 jq -n "{
   version: { hash: \"$hash\" },
   metadata: [
     { name: \"hash\", value: \"$hash\" },
     { name: \"etag-save\", value: \"$etag_save\" },
+    { name: \"response-code\", value: \"$response_code\" },
     { name: \"user_shell\", value: \"$(cat .curl/times/user_shell)\" },
     { name: \"system_shell\", value: \"$(cat .curl/times/system_shell)\" },
     { name: \"user_child\", value: \"$(cat .curl/times/user_child)\" },

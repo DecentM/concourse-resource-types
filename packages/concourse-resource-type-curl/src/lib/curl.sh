@@ -17,6 +17,20 @@ mkdir -p .curl
 url=$1
 readarray -t arguments < <(printf '%s\n' "$2" | jq -rc '.[]')
 
-trap "times > .curl/times" EXIT
+set +e
 
-curl "$url" --cookie-jar .curl/cookie-jar --etag-save .curl/etag-save --dump-header .curl/dump-header --output .curl/output --fail-with-body --location "${arguments[@]}"
+curl "$url" \
+  --cookie-jar .curl/cookie-jar \
+  --etag-save .curl/etag-save \
+  --dump-header .curl/dump-header \
+  --output .curl/output \
+  --fail-with-body \
+  --location \
+  "${arguments[@]}"
+
+set -e
+
+times >.curl/times
+
+"$(dirname "$0")"/parse-response-code.sh
+"$(dirname "$0")"/parse-times.sh

@@ -4,7 +4,7 @@ resource_types:
     check_every: 1h
     source:
       repository: decentm/concourse-curl-resource
-      tag: v0.0.13
+      tag: v0.0.17
 
 resources:
   - name: example-com
@@ -61,5 +61,4 @@ jobs:
             - "-X"
             - "POST"
             - "--json"
-            - |
-              {"asd": 1, "from_ci": true}
+            - content: Website changed!
