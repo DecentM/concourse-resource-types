@@ -25,15 +25,4 @@ if [ -n "$1" ]; then
   cp -a .curl/* "$1/"
 fi
 
-hash=$(sha256sum .curl/output | cut -d ' ' -f1)
-
-jq -n "{
-  version: { hash: \"$hash\" },
-  metadata: [
-    { name: \"hash\", value: \"$hash\" },
-    { name: \"user_shell\", value: \"$(cat .curl/times/user_shell)\" },
-    { name: \"system_shell\", value: \"$(cat .curl/times/system_shell)\" },
-    { name: \"user_child\", value: \"$(cat .curl/times/user_child)\" },
-    { name: \"system_child\", value: \"$(cat .curl/times/system_child)\" }
-  ]
-}"
+"$(dirname "$0")"/lib/print-metadata.sh
