@@ -4,7 +4,7 @@ resource_types:
     check_every: 1h
     source:
       repository: decentm/concourse-curl-resource
-      tag: v0.0.17
+      tag: v0.0.18
 
 resources:
   - name: example-com
@@ -12,6 +12,8 @@ resources:
     check_every: 1h
     source:
       url: http://example.com
+      check_arguments:
+        - "-I"
       arguments:
         - "-A"
         - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
@@ -38,6 +40,8 @@ jobs:
               file: example-com/dump-header
             - load_var: site-etag-save
               file: example-com/etag-save
+            - load_var: site-response-code
+              file: example-com/response-code
 
             - load_var: site-times-system_child
               file: example-com/times/system_child

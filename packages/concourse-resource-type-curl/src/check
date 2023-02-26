@@ -11,7 +11,7 @@ set -u
 payload=$(cat)
 
 url=$("$(dirname "$0")"/lib/variables.sh url <<<"$payload")
-arguments=$("$(dirname "$0")"/lib/variables.sh arguments <<<"$payload")
+arguments=$("$(dirname "$0")"/lib/variables.sh check_arguments <<<"$payload")
 response_code_min=$("$(dirname "$0")"/lib/variables.sh response_code_min <<<"$payload")
 response_code_max=$("$(dirname "$0")"/lib/variables.sh response_code_max <<<"$payload")
 

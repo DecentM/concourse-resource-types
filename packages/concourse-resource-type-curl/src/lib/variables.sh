@@ -26,6 +26,12 @@ case $variable in
 "url")
   get_payload "source.url"
   ;;
+"check_arguments")
+  check_arguments=$(get_payload "source.check_arguments" "[]")
+  source_arguments=$(get_payload "source.arguments" "[]")
+
+  printf '%s\n' "[$check_arguments, $source_arguments]" | jq -r "flatten(1)"
+  ;;
 "arguments")
   source_arguments=$(get_payload "source.arguments" "[]")
   params_arguments=$(get_payload "params.arguments" "[]")
