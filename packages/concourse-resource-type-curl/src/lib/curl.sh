@@ -33,4 +33,5 @@ set -e
 times >.curl/times
 
 "$(dirname "$0")"/parse-response-code.sh
+"$(dirname "$0")"/parse-output-size.sh
 "$(dirname "$0")"/parse-times.sh

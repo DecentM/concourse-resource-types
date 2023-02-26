@@ -4,7 +4,7 @@ resource_types:
     check_every: 1h
     source:
       repository: decentm/concourse-curl-resource
-      tag: v0.0.18
+      tag: v0.0.20
 
 resources:
   - name: example-com
@@ -42,6 +42,8 @@ jobs:
               file: example-com/etag-save
             - load_var: site-response-code
               file: example-com/response-code
+            - load_var: site-output-size-bytes
+              file: example-com/output-size-bytes
 
             - load_var: site-times-system_child
               file: example-com/times/system_child
