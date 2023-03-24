@@ -51,6 +51,10 @@ response output is saved to `.curl/output` [with various other metadata](#additi
 
 #### Parameters (get)
 
+- `url`: *Optional.* The address this resource will interact with. Any URL
+  accepted by `curl` is allowed, and if not specified the URL from the source
+  configuration will be used.
+
 - `arguments`: *Optional.* An additional array of strings that serve as
   arguments. This array will be merged with the arguments from the source
   configuration, `check_arguments` is ignored.
@@ -82,6 +86,10 @@ The command is the same as `in`. It's executed with `arguments` and `params.argu
 response output is saved to `.curl/output` with the same metadata as `in`.
 
 #### Parameters (put)
+
+- `url`: *Optional.* The address this resource will interact with. Any URL
+  accepted by `curl` is allowed, and if not specified the URL from the source
+  configuration will be used.
 
 - `arguments`: *Optional.* An additional array of strings that serve as
   arguments. This array will be merged with the arguments from the source

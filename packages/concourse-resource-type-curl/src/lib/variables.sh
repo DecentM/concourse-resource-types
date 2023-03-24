@@ -24,7 +24,7 @@ variable=$1
 
 case $variable in
 "url")
-  get_payload "source.url"
+  get_payload "params.url" "source.url"
   ;;
 "check_arguments")
   check_arguments=$(get_payload "source.check_arguments" "[]")
