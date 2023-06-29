@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+if [ -n "${DEBUG}" ]; then
+  set -x
+fi
+
+set -u
+
+payload=$(cat)
+
+arguments=$("$(dirname "$0")"/lib/variables.sh check_arguments <<<"$payload")
+
+"$(dirname "$0")"/lib/fly.sh "$arguments"
+
+hash=$(sha256sum .fly/output | cut -d ' ' -f1)
+
+jq -n "[{hash: \"$hash\"}]"

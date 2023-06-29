@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+if [ -n "${DEBUG}" ]; then
+  set -x
+fi
+
+set -u
+
+payload=$(cat)
+
+arguments=$("$(dirname "$0")"/lib/variables.sh arguments <<<"$payload")
+skip=$("$(dirname "$0")"/lib/variables.sh skip <<<"$payload")
+
+if [ "$skip" != "true" ]; then
+  "$(dirname "$0")"/lib/fly.sh "$arguments"
+
+  set +u
+
+  # The output directory is passed as the first argument
+  if [ -n "$1" ]; then
+    mkdir -p "$1"
+    cp -a .fly/* "$1/"
+  fi
+
+  "$(dirname "$0")"/lib/print-metadata.sh
+fi
