@@ -25,7 +25,6 @@ curl "$url" \
   --dump-header .curl/dump-header \
   --output .curl/output \
   --fail-with-body \
-  --location \
   "${arguments[@]}"
 
 set -e

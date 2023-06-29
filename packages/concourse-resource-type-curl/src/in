@@ -14,17 +14,19 @@ url=$("$(dirname "$0")"/lib/variables.sh url <<<"$payload")
 arguments=$("$(dirname "$0")"/lib/variables.sh arguments <<<"$payload")
 response_code_min=$("$(dirname "$0")"/lib/variables.sh response_code_min <<<"$payload")
 response_code_max=$("$(dirname "$0")"/lib/variables.sh response_code_max <<<"$payload")
+skip=$("$(dirname "$0")"/lib/variables.sh skip <<<"$payload")
 
-"$(dirname "$0")"/lib/curl.sh "$url" "$arguments"
+if [ "$skip" != "true" ]; then
+  "$(dirname "$0")"/lib/curl.sh "$url" "$arguments"
 
-set +u
+  set +u
 
-# The output directory is passed as the first argument
-if [ -n "$1" ]; then
-  mkdir -p "$1"
-  cp -a .curl/* "$1/"
+  # The output directory is passed as the first argument
+  if [ -n "$1" ]; then
+    mkdir -p "$1"
+    cp -a .curl/* "$1/"
+  fi
+
+  "$(dirname "$0")"/lib/print-metadata.sh
+  "$(dirname "$0")"/lib/assert-response-code.sh "$(cat .curl/response-code)" "$response_code_min" "$response_code_max"
 fi
-
-"$(dirname "$0")"/lib/print-metadata.sh
-
-"$(dirname "$0")"/lib/assert-response-code.sh "$(cat .curl/response-code)" "$response_code_min" "$response_code_max"

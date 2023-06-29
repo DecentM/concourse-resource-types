@@ -55,6 +55,8 @@ response output is saved to `.curl/output` [with various other metadata](#additi
   accepted by `curl` is allowed, and if not specified the URL from the source
   configuration will be used.
 
+- `skip`: *Optional* If `true`, no request will be made.
+
 - `arguments`: *Optional.* An additional array of strings that serve as
   arguments. This array will be merged with the arguments from the source
   configuration, `check_arguments` is ignored.
@@ -62,6 +64,7 @@ response output is saved to `.curl/output` [with various other metadata](#additi
 #### Additional files populated
 
 - `.curl/response-code`: The response code of the last request after redirects
+  (add `-L` to follow to the end)
 
 - `.curl/output`: The entire body of the response from the server
 
@@ -87,13 +90,7 @@ response output is saved to `.curl/output` with the same metadata as `in`.
 
 #### Parameters (put)
 
-- `url`: *Optional.* The address this resource will interact with. Any URL
-  accepted by `curl` is allowed, and if not specified the URL from the source
-  configuration will be used.
-
-- `arguments`: *Optional.* An additional array of strings that serve as
-  arguments. This array will be merged with the arguments from the source
-  configuration, `check_arguments` is ignored.
+(same as `get`)
 
 ------------
 

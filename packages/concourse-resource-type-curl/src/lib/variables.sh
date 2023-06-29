@@ -23,6 +23,9 @@ set +u
 variable=$1
 
 case $variable in
+"skip")
+  get_payload ".params.skip"
+  ;;
 "url")
   get_payload ".params.url? // .source.url"
   ;;
@@ -45,7 +48,7 @@ case $variable in
   get_payload ".source.response_code.min" "200"
   ;;
 *)
-  printf 'Supported variables: "url", "arguments".\n\nUsage: variables.sh <variable>\n'
+  printf 'Supported variables: "url", "arguments", "skip", "response_code_min", "response_code_max".\n\nUsage: variables.sh <variable>\n'
   exit 1
   ;;
 esac
