@@ -26,6 +26,15 @@ case $variable in
 "skip")
   get_payload ".params.skip"
   ;;
+"username")
+  get_payload ".params.username"
+  ;;
+"password")
+  get_payload ".params.password"
+  ;;
+"team")
+  get_payload ".params.team"
+  ;;
 "check_arguments")
   check_arguments=$(get_payload ".source.check_arguments" "[]")
   source_arguments=$(get_payload ".source.arguments" "[]")
@@ -39,7 +48,7 @@ case $variable in
   printf '%s\n' "[$source_arguments, $params_arguments]" | jq -r "flatten(1)"
   ;;
 *)
-  printf 'Supported variables: "arguments", "check_arguments", "skip".\n\nUsage: variables.sh <variable>\n'
+  printf 'Supported variables: "username", "password", "team", "arguments", "check_arguments", "skip".\n\nUsage: variables.sh <variable>\n'
   exit 1
   ;;
 esac

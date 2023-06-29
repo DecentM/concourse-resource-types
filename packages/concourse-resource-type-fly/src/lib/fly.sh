@@ -14,9 +14,15 @@ fi
 
 mkdir -p .fly
 
-readarray -t arguments < <(printf '%s\n' "$1" | jq -rc '.[]')
+username=$1
+password=$2
+team=$3
 
-fly "${arguments[@]}" >.fly/output
+readarray -t arguments < <(printf '%s\n' "$4" | jq -rc '.[]')
+
+fly -t default -c "$ATC_EXTERNAL_URL" login --username="$username" --password="$password" --team-name="$team"
+
+fly -t default "${arguments[@]}" >.fly/output
 
 times >.fly/times
 
