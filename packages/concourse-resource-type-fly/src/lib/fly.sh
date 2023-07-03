@@ -20,7 +20,7 @@ team=$3
 
 readarray -t arguments < <(printf '%s\n' "$4" | jq -rc '.[]')
 
-fly -t default -c "$ATC_EXTERNAL_URL" login --username="$username" --password="$password" --team-name="$team"
+fly -t default login -c "$ATC_EXTERNAL_URL" --username="$username" --password="$password" --team-name="$team"
 
 fly -t default "${arguments[@]}" >.fly/output
 
