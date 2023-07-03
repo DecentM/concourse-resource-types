@@ -14,7 +14,8 @@ username=$("$(dirname "$0")"/lib/variables.sh username <<<"$payload")
 password=$("$(dirname "$0")"/lib/variables.sh password <<<"$payload")
 team=$("$(dirname "$0")"/lib/variables.sh team <<<"$payload")
 arguments=$("$(dirname "$0")"/lib/variables.sh check_arguments <<<"$payload")
+sync=$("$(dirname "$0")"/lib/variables.sh sync <<<"$payload")
 
-"$(dirname "$0")"/lib/fly.sh "$username" "$password" "$team" "$arguments"
+"$(dirname "$0")"/lib/fly.sh "$username" "$password" "$team" "$sync" "$arguments"
 
 "$(dirname "$0")"/lib/print-metadata.sh
