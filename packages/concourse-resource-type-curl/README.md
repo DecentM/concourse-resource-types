@@ -47,7 +47,7 @@ response.
 ### `in`: Hit the URL and return its response
 
 The command is executed with `arguments` and `params.arguments`, and the
-response output is saved to `.curl/output` [with various other metadata](#additional-files-populated).
+response output is saved to `<resource name>/output` [with various other metadata](#additional-files-populated).
 
 #### Parameters (get)
 
@@ -63,30 +63,30 @@ response output is saved to `.curl/output` [with various other metadata](#additi
 
 #### Additional files populated
 
-- `.curl/response-code`: The response code of the last request after redirects
+- `<resource name>/response-code`: The response code of the last request after redirects
   (add `-L` to follow to the end)
 
-- `.curl/output`: The entire body of the response from the server
+- `<resource name>/output`: The entire body of the response from the server
 
-- `.curl/output-size-bytes`: The size of the response body in bytes
+- `<resource name>/output-size-bytes`: The size of the response body in bytes
 
-- `.curl/cookie-jar`: Output of the --cookie-jar argument from `curl`
+- `<resource name>/cookie-jar`: Output of the --cookie-jar argument from `curl`
 
-- `.curl/etag-save`: Output of the --etag-save argument from `curl`
+- `<resource name>/etag-save`: Output of the --etag-save argument from `curl`
 
-- `.curl/dump-header`: Output of the --dump-header argument from `curl`
+- `<resource name>/dump-header`: Output of the --dump-header argument from `curl`
 
-- `.curl/times`: A directory containing the output of the `times` command. It
+- `<resource name>/times`: A directory containing the output of the `times` command. It
   has the following files:
-  - `.curl/times/system_child`: The top left value
-  - `.curl/times/system_shell`: The top right value
-  - `.curl/times/user_child`: The bottom left value
-  - `.curl/times/user_shell`: The bottom right value
+  - `<resource name>/times/system_child`: The top left value
+  - `<resource name>/times/system_shell`: The top right value
+  - `<resource name>/times/user_child`: The bottom left value
+  - `<resource name>/times/user_shell`: The bottom right value
 
 ### `out`: Hit the URL
 
 The command is the same as `in`. It's executed with `arguments` and `params.arguments`, and the
-response output is saved to `.curl/output` with the same metadata as `in`.
+response output is saved to `<resource name>/output` with the same metadata as `in`.
 
 #### Parameters (put)
 

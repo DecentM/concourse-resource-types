@@ -34,4 +34,5 @@ fly -t default "${arguments[@]}" >.fly/output
 
 times >.fly/times
 
+"$(dirname "$0")"/parse-output-size.sh
 "$(dirname "$0")"/parse-times.sh

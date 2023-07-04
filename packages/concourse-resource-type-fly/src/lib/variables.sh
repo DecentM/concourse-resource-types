@@ -24,7 +24,7 @@ variable=$1
 
 case $variable in
 "skip")
-  get_payload ".source.skip"
+  get_payload ".params.skip"
   ;;
 "username")
   get_payload ".source.username"
@@ -33,10 +33,10 @@ case $variable in
   get_payload ".source.password"
   ;;
 "team")
-  get_payload ".source.team"
+  get_payload ".source.team" "main"
   ;;
 "sync")
-  get_payload ".source.sync"
+  get_payload ".params.sync"
   ;;
 "check_arguments")
   check_arguments=$(get_payload ".source.check_arguments" "[]")
