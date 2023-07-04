@@ -28,6 +28,12 @@ curl "$url" \
   --fail-with-body \
   "${arguments[@]}"
 
+curl_exit=$?
+
+if [ $curl_exit -eq 26 ]; then
+  exit 26
+fi
+
 set -e
 
 times >.curl/times
