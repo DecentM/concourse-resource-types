@@ -30,7 +30,12 @@ if [ "$sync" = "true" ]; then
   fly -t default sync -c "$ATC_EXTERNAL_URL" >/dev/null
 fi
 
-eval "fly -t default ${arguments[*]} >.fly/output"
+set +e
+
+touch .fly/output
+eval timeout 5s "fly -t default ${arguments[*]} >.fly/output"
+
+set -e
 
 times >.fly/times
 
