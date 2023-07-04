@@ -30,8 +30,8 @@ curl "$url" \
 
 curl_exit=$?
 
-if [ $curl_exit -eq 26 ]; then
-  exit 26
+if [ $curl_exit -eq 26 ] || [ $curl_exit -eq 8 ]; then
+  exit $curl_exit
 fi
 
 set -e
