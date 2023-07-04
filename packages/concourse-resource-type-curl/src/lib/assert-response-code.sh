@@ -9,6 +9,11 @@ fi
 set -u
 
 code=$1
+
+if [ -n "${code//[0-9]/}" ] || [ -z "$code" ]; then
+  exit 0
+fi
+
 range_min=$2
 range_max=$3
 
