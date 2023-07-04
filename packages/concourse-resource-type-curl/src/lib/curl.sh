@@ -19,6 +19,7 @@ readarray -t arguments < <(printf '%s\n' "$2" | jq -rc '.[]')
 
 set +e
 
+touch .curl/output
 curl "$url" \
   --cookie-jar .curl/cookie-jar \
   --etag-save .curl/etag-save \
