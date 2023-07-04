@@ -29,4 +29,10 @@ if [ "$skip" != "true" ]; then
 
   "$(dirname "$0")"/lib/print-metadata.sh
   "$(dirname "$0")"/lib/assert-response-code.sh "$(cat .curl/response-code)" "$response_code_min" "$response_code_max"
+else
+  jq \
+    --arg hash "skipped" \
+    -n '{
+    version: { hash: $hash },
+  }'
 fi

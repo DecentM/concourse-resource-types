@@ -29,4 +29,10 @@ if [ "$skip" != "true" ]; then
   fi
 
   "$(dirname "$0")"/lib/print-metadata.sh
+else
+  jq \
+    --arg hash "skipped" \
+    -n '{
+    version: { hash: $hash },
+  }'
 fi
