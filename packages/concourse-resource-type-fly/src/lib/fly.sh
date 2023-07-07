@@ -33,7 +33,7 @@ fi
 set +e
 
 touch .fly/output
-eval timeout 5s "fly -t default ${arguments[*]} >.fly/output"
+eval timeout 3 "fly -t default ${arguments[*]} >.fly/output"
 
 set -e
 
