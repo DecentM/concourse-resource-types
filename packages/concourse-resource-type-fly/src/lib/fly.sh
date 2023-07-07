@@ -37,6 +37,8 @@ eval timeout 3 "fly -t default ${arguments[*]} >.fly/output"
 
 set -e
 
+fly -t default logout >/dev/null
+
 times >.fly/times
 
 "$(dirname "$0")"/parse-output-size.sh
